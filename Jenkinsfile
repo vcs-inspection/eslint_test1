@@ -11,7 +11,6 @@ pipeline {
                     node --version
                     npm --version
                     bower --version
-                    sudo apt-get install python3
                     npm i -g xml2json-cli
                     npm i -g eslint@5.16.0
                     npm i -g babel-eslint
