@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {nodejs "node"}
-    
+
     stages {
         stage('Build') {
             steps {
@@ -17,6 +17,7 @@ pipeline {
 
                     eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml
                 """
+                exit 0
             }
         }
         
