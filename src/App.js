@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import Amplify, { API, Auth } from "aws-amplify";
-import aws_exports from './aws-exports';
-import { withAuthenticator } from "aws-amplify-react";
 
 import logo from './logo.svg';
 import './App.css';
-Amplify.configure(aws_exports);
 
 class App extends Component {
   
@@ -16,27 +12,7 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    this.printTokens();
-    this.getTest();
 
-  }
-  
-  getTest = () => {
-    API.get("viewerApi", "/api")
-    .then((responseJson) => {
-        console.log(responseJson);
-    })
-  };
-
-  printTokens(){
-    console.log(Auth.currentSession().then(res=>{
-        let accessToken = res.getAccessToken()
-        let jwt = accessToken.getJwtToken()
-        console.log(`AccessToken: ${JSON.stringify(accessToken)}`)
-        console.log("\n\n")
-        console.log(`JWT: ${jwt}`)
-      })
-    )
   }
 
   render(){
@@ -55,4 +31,4 @@ class App extends Component {
   );
 }};
 
-export default withAuthenticator(App, true);
+export default App;

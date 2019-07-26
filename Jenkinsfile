@@ -17,6 +17,7 @@ pipeline {
                     ls
 
                     eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml
+                    npm run build
                 """
             }
         }
