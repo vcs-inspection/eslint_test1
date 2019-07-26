@@ -17,9 +17,6 @@ pipeline {
 
                     eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml
                 """
-            }
-            if (env.BRANCH_NAME == 'master') {
-                currentBuild.result = 'SUCCESS'
                 return
             }
         }
