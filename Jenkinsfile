@@ -5,7 +5,6 @@ pipeline {
 
     stages {
         stage('Build') {
-            if [ $RESULT -eq 1 ]; then exit 0; fi
             steps {
                 echo 'Building..'
                 sh """
