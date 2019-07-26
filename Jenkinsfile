@@ -5,7 +5,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                echo $PATH
                 sh """
                     node --version
                     npm --version
