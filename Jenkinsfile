@@ -5,6 +5,7 @@ pipeline {
 
     stages {
         stage('Build') {
+            if [ $RESULT -eq 1 ]; then exit 0; fi
             steps {
                 echo 'Building..'
                 sh """
@@ -16,8 +17,6 @@ pipeline {
                     ls
 
                     eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml
-                    exit 0
-                    return
                 """
             }
         }
