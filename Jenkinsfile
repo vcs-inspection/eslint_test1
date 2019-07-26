@@ -15,8 +15,7 @@ pipeline {
                     npm i -g babel-eslint
                     ls
 
-                    eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml
-                    npm run build
+                    eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml || exit 0
                 """
             }
         }
