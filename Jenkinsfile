@@ -11,6 +11,7 @@ pipeline {
                     node --version
                     npm --version
                     bower --version
+                    npm i -g node-expat
                     npm i -g xml2json-cli
                     npm i -g eslint@5.16.0
                     npm i -g babel-eslint
