@@ -1,0 +1,38 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Install dependencies needed for running tests
+      - npm install
+
+      # Upgrade AWS CLI to the latest version
+      - pip3 install --upgrade awscli
+  pre_build:
+    commands:
+      # Discover and run unit tests in the 'tests' directory
+      # - npm test
+      - node --version
+      - npm --version
+      - npm i -g eslint@5.16.0
+      - npm i -g babel-eslint
+      - npm i -g xml-js
+
+  post_build:
+    commands:
+      # Remove existing node_modules to clear dev dependencies
+      - rm -r node_modules
+
+      # Install runtime dependencies
+      - npm install --production
+
+      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template-file template-export.yml
+
+      - eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml || exit 0
+      - xml-js src/checkstyle-result.xml --spaces 4 --out src/checkstyle-result.json
+artifacts:
+  type: zip
+  files:
+    - '**/*'
+    base-directory: $CODEBUILD_SRC_DIR/src/
+    discard-paths: no
