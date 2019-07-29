@@ -33,6 +33,6 @@ phases:
 artifacts:
   type: zip
   files:
-    - '**/*'
+      - '**/*'
     base-directory: $CODEBUILD_SRC_DIR/src/
     discard-paths: no
