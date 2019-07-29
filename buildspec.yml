@@ -32,7 +32,3 @@ phases:
       - xml-js src/checkstyle-result.xml --spaces 4 --out src/checkstyle-result.json
 artifacts:
   type: zip
-  files:
-      - '**/*'
-    base-directory: $CODEBUILD_SRC_DIR/src/
-    discard-paths: no
