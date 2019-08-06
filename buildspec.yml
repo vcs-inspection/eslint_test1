@@ -2,12 +2,19 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 10 
+      python: 3.7 
+      
     commands:
       # Install dependencies needed for running tests
       - npm install
 
       # Upgrade AWS CLI to the latest version
       - pip3 install --upgrade awscli
+      
+      - apt install -y mongodb
+      
   pre_build:
     commands:
       # Discover and run unit tests in the 'tests' directory
@@ -17,6 +24,7 @@ phases:
       - npm i -g eslint@5.16.0
       - npm i -g babel-eslint
       - npm i -g xml-js
+      - npm i -g mongoimport
 
   post_build:
     commands:
@@ -26,9 +34,12 @@ phases:
       # Install runtime dependencies
       - npm install --production
 
-      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template-file template-export.yml
-
       - eslint -c .eslintrc.json -f checkstyle src/**.js -o src/checkstyle-result.xml || exit 0
       - xml-js src/checkstyle-result.xml --spaces 4 --out src/checkstyle-result.json
+      - mongoimport --host codechecker-shard-0/codechecker-shard-00-00-v6w0w.mongodb.net:27017,codechecker-shard-00-01-v6w0w.mongodb.net:27017,codechecker-shard-00-02-v6w0w.mongodb.net:27017 --ssl --username user01 --password qNGAi33fWXZPNT6u --authenticationDatabase admin --db codechecker --collection eslint --type json --file src/checkstyle-result.json
+  
 artifacts:
   type: zip
+  files:
+    - src/checkstyle-result.json
+    - src/checkstyle-result.xml
